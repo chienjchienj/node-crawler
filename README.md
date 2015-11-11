@@ -1,8 +1,12 @@
 [![Build Status](https://travis-ci.org/sylvinus/node-crawler.svg?branch=master)](https://travis-ci.org/sylvinus/node-crawler)
 
-Current Goal
+Node Crawler is not maintained at the moment
 ------
-Refactoring the code to be more maintenable, it's spaghetti code in there !
+Have a look at alternatives modules:
+
+* [node-spider](https://github.com/mikeal/spider)
+* [node-simplecrawler](https://github.com/cgiffard/node-simplecrawler)
+* [phantomJS](http://phantomjs.org/)
 
 node-crawler
 ------------
@@ -16,7 +20,7 @@ It features:
  * Priority of requests
  * forceUTF8 mode to let node-crawler deal for you with charset detection and conversion
  * A local cache
- * node 0.8 and 0.10 support
+ * node 0.10 and 0.12 support
 
 The argument for creating this package was made at ParisJS #2 in 2010 ( [lightning talk slides](http://www.slideshare.net/sylvinus/web-crawling-with-nodejs) )
 
@@ -77,7 +81,7 @@ c.queue([{
     html: '<p>This is a <strong>test</strong></p>'
 }]);
 ```
-For more examples, look at the [tests](https://github.com/sylvinus/node-crawler/tree/master/test).
+For more examples, look at the [tests](https://github.com/sylvinus/node-crawler/tree/master/tests).
 
 Options reference
 -----------------
@@ -112,7 +116,7 @@ Retry options:
 
 Server-side DOM options:
 
- * `jQuery`: true, false or ConfObject (Default true)  
+ * `jQuery`: true, false or ConfObject (Default true)
    see below [Working with Cheerio or JSDOM](https://github.com/paulvalla/node-crawler/blob/master/README.md#working-with-cheerio-or-jsdom)
 
 Charset encoding:
@@ -135,7 +139,7 @@ Other:
 Working with Cheerio or JSDOM
 -----------------------------
 
-Crawler by default use [Cheerio](https://github.com/cheeriojs/cheerio) instead of [Jsdom](https://github.com/tmpvar/jsdom). Jsdom is more robust but can be hard to install (espacially on windows) because of [contextify](https://github.com/tmpvar/jsdom#contextify).  
+Crawler by default use [Cheerio](https://github.com/cheeriojs/cheerio) instead of [Jsdom](https://github.com/tmpvar/jsdom). Jsdom is more robust but can be hard to install (espacially on windows) because of [contextify](https://github.com/tmpvar/jsdom#contextify).
 Which is why, if you want to use jsdom you will have to build it, and `require('jsdom')` in your own script before passing it to crawler. This is to avoid cheerio crawler user to build jsdom when installing crawler.
 
 ###Working with Cheerio
@@ -148,7 +152,7 @@ jQuery: {
     name: 'cheerio',
     options: {
         normalizeWhitespace: true,
-        xmlMode: true 
+        xmlMode: true
     }
 }
 ```
@@ -163,7 +167,7 @@ These parsing options are taken directly from [htmlparser2](https://github.com/f
 ```
 
 For a full list of options and their effects, see [this](https://github.com/fb55/DomHandler) and
-[htmlparser2's options](https://github.com/fb55/htmlparser2/wiki/Parser-options).  
+[htmlparser2's options](https://github.com/fb55/htmlparser2/wiki/Parser-options).
 [source](https://github.com/cheeriojs/cheerio#loading)
 
 ###Working with JSDOM
@@ -192,6 +196,18 @@ node-crawler use a local httpbin for testing purpose. You can install httpbin as
     // Finally
     $ npm install && npm test
 
+### Alternative: Docker
+
+After [installing Docker](http://docs.docker.com/), you can run:
+
+    // Builds the local test environment
+    $ docker build -t node-crawler .
+
+    // Runs tests
+    $ docker run node-crawler sh -c "gunicorn httpbin:app -b 127.0.0.1:8000 -w 6 --daemon && npm install && npm test"
+
+    // You can also ssh into the container for easier debugging
+    $ docker run -i -t node-crawler bash
 
 [![build status](https://secure.travis-ci.org/sylvinus/node-crawler.png)](http://travis-ci.org/sylvinus/node-crawler)
 
